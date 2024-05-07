@@ -23,8 +23,11 @@
     <label for="age">Age</label>
     <input type="text" th:field="*{age}" id="age" placeholder="Age">
     <br/>
-    <label for="roles">Roles</label>
-    <input type="text" th:field="*{roles}" id="roles" placeholder="Roles">
+    <label for="roles">Role User</label>
+    <input type="checkbox" th:field="*{roles}" id="roles" value="1" checked>
+    <br/>
+    <label for="roles">Role Admin</label>
+    <input type="checkbox" th:field="*{roles}" id="roles" value="2" checked>
     <br/>
     <input type="submit" value="Update user">
 </form>

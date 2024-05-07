@@ -29,8 +29,16 @@ public class AdminController {
     }
 
     @PostMapping("/user-create")
-    public String createUser(User user) {
-        service.saveUser(user);
+    public String createUser(User user, Model model) {
+
+        if (!user.getPassword().equals(user.getPasswordConfirm())) {
+            model.addAttribute("Error", "Пароли не совпадают");
+            return "user-create";
+        }
+        if (!service.saveUser(user)) {
+            model.addAttribute("Error", "Пользователь с таким именем уже существует");
+            return "user-create";
+        }
         return "redirect:/admin";
     }
 
