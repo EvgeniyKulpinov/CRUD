@@ -7,20 +7,19 @@
     <title>Create user</title>
 </head>
 <body>
-<form action="#" th:action="@{/admin/user-create}" th:object="${user}" method="post">
+<form action="#" th:action="@{/registration}" th:object="${user}" method="post">
     <label for="username">Username</label>
     <input type="text" th:field="*{username}" id="username" placeholder="Username">
     <br/>
     <label for="password">Password</label>
     <input type="text" th:field="*{password}" id="password" placeholder="Password">
     <br/>
-    <label for="lastName">Last Name</label>
-    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+    <label for="passwordConfirm">Password Confirm</label>
+    <input type="text" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Password Confirm">
     <br/>
-    <label for="age">Age</label>
-    <input type="text" th:field="*{age}" id="age" placeholder="Age">
+    <input type="submit" value="Registration">
     <br/>
-    <input type="submit" value="Create user">
+    <h1 th:text="${Error}"></h1>
 </form>
 </body>
 </html>
