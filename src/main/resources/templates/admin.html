@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2" style="background-color: #0f2233"><h4><span style="color: white">Admin@mail.ru</span></h4>
+        </div>
+        <div class="col-md-1" style="background-color: #0f2233"><h4><span style="color: white">whit roles:</span></h4>
+        </div>
+        <div class="col-md-8" style="background-color: #0f2233"><h4><span style="color: white">ADMIN USER</span></h4>
+        </div>
+        <div class="col-md-1" style="background-color: #0f2233"><h4><span style="color: white">Logout</span></h4></div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <a href="/admin" class="btn btn-info btn-block">Admin</a>
+            <a href="/user" class="btn btn-info btn-block">User</a>
+        </div>
+        <div class="container-fluid col-md-10" style="background-color: #fcfcfc">
+            <h1>Admin panel</h1>
+            <div class="container-fluid">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" data-target="#tablePanel">Users table</a></li>
+                    <li><a data-toggle="tab" data-target="#user-create">Create users</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" id="user-create">
+                        <div class="panel panel-default" style="background-color: #fcfcfc">
+                            <div class="panel-body"><h3>Add new user</h3></div>
+                            <div class="panel panel-default" style="background-color: white">
+                                <form id="create" name="create">
+                                    <div class="row text-center">
+                                        <div class="col-md-4 col-md-offset-4">
+                                            <br/>
+                                            <label for="username">Username</label>
+                                            <input type="text" id="username" name="username" placeholder="Username"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="password">Password</label>
+                                            <input type="password" id="password" name="password" placeholder="Password"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="passwordConfirm">Password Confirm</label>
+                                            <input type="password" id="passwordConfirm" placeholder="Password Confirm"
+                                                   name="passwordConfirm"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="lastName">Last Name</label>
+                                            <input type="text" id="lastName" placeholder="Last Name" name="lastName"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="age">Age</label>
+                                            <input type="text" id="age" placeholder="Age" name="age"
+                                                   class="form-control">
+                                            <br/>
+                                            <input type="submit" value="Create user"
+                                                   class="btn btn-success" onclick="addUser()">
+                                            <br/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane active" id="tablePanel">
+                        <div class="panel panel-default" style="background-color: #fcfcfc">
+                            <div class="panel-body"><h3>All users</h3></div>
+                        </div>
+                        <table id="table" class="table table-striped" style="background-color: #ffffff">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Role</th>
+                                <th class="text-center">Edit</th>
+                                <th class="text-center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                        </table>
+                        <div id="edit" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">x</button>
+                                        <h4 class="modal-title">Edit user</h4>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <form id="delete-form">
+                                            <label for="id">Id</label>
+                                            <input readonly type="number" id="id" placeholder="Id" name="id"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="username">Username</label>
+                                            <input type="text" id="username" placeholder="Username" name="username"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="password">Password</label>
+                                            <input type="text" id="password" placeholder="Password" name="password"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="lastName">Last Name</label>
+                                            <input type="text" id="lastName" placeholder="Last Name" name="lastName"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="age">Age</label>
+                                            <input type="text" id="age" placeholder="Age" name="age"
+                                                   class="form-control">
+                                            <br/>
+                                            <div class="dropdown">
+                                                <button class="btn btn-info btn-block dropdown-toggle"
+                                                        data-toggle="dropdown"> Roles <span
+                                                        class="caret"></span></button>
+                                                <ul class="dropdown-menu col-md-12">
+                                                    <li>
+                                                        <label class="btn-primary btn-block text-center">
+                                                            <input type="checkbox" id="roles" value="1" checked>
+                                                            Role User
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label class="btn-primary btn-block text-center">
+                                                            <input type="checkbox" id="roles" value="2" checked>
+                                                            Role Admin
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <br/>
+                                            <input type="submit" value="Update user"
+                                                   class="btn btn-success btn-block">
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button class="btn btn-primary">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="delete" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button class="close" data-dismiss="modal">x</button>
+                                        <h4 class="modal-title">Delete user</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <label for="idDelete">Id</label>
+                                            <input disabled type="number" id="idDelete" placeholder="Id"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="usernameDelete">Username</label>
+                                            <input disabled type="text" id="usernameDelete" placeholder="Username"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="passwordDelete">Password</label>
+                                            <input disabled type="text" id="passwordDelete" placeholder="Password"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="lastNameDelete">Last Name</label>
+                                            <input disabled type="text" id="lastNameDelete" placeholder="Last Name"
+                                                   class="form-control">
+                                            <br/>
+                                            <label for="ageDelete">Age</label>
+                                            <input disabled type="text" id="ageDelete" placeholder="Age"
+                                                   class="form-control">
+                                            <br/>
+                                            <div class="dropdown">
+                                                <button class="btn btn-info btn-block dropdown-toggle disabled"
+                                                        data-toggle="dropdown"> Roles <span
+                                                        class="caret"></span></button>
+                                                <ul class="dropdown-menu col-md-12">
+                                                    <li>
+                                                        <label class="btn-primary btn-block text-center">
+                                                            <input type="checkbox" id="roles" value="1" checked>
+                                                            Role User
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label class="btn-primary btn-block text-center">
+                                                            <input type="checkbox" id="roles" value="2" checked>
+                                                            Role Admin
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <br/>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button class="btn btn-danger" onclick="Delete()">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/admin/getUsers",
+            dataType: 'json',
+            success: function (users) {
+                let tbody = $('#tableBody');
+                tbody.empty();
+                users.forEach(function (user) {
+                    let dynamicTR =`
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.lastName}</td>
+                            <td>${user.age}</td>
+                            <td>${user.roles[0].role}</td>
+                            <td>
+                            <button class='btn btn-primary' data-toggle='modal' data-target='#edit'> Edit
+                            </button>
+                            </td>
+                            <td>
+                            <button class='btn btn-danger' data-toggle='modal' data-target='#delete'
+                            onClick='DeleteForm(${user.id})'> Delete
+                            </button>
+                            </td>
+                        </tr>`;
+                    tbody.append(dynamicTR);
+                })
+            },
+        });
+    });
+
+    function addUser() {
+        $.ajax({
+            type: 'POST',
+            url: "admin/user-create",
+            dataType: "JSON",
+            data: $("#create").serialize(),
+            success: function (data) {
+                $('#username').val("");
+                $('#password').val("");
+                $('#passwordConfirm').val("");
+                $('#lastName').val("");
+                $('#age').val("");
+                console.log(data);
+            }
+        });
+    }
+
+    function Delete(id)
+    {
+        $.ajax({
+            type: "POST",
+            url : "/admin/user-delete/" + id,
+            dataType : "JSON",
+        });
+    }
+    function DeleteForm(id) {
+        $.ajax({
+            type: "GET",
+            url: "/admin/deleteForm/" + id,
+            dataType: "JSON",
+            success: function (user) {
+                $('#idDelete').val(user.id);
+                $('#usernameDelete').val(user.username);
+                $('#passwordDelete').val(user.password);
+                $('#lastNameDelete').val(user.lastName);
+                $('#ageDelete').val(user.age);
+                console.log(user);
+            }
+        });
+    }
+</script>
+
+</script>
+</body>
+</html>
