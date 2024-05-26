@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="collapse">
+    <div class="panel panel-default" style="background-color: #fcfcfc">
+        <div class="panel-body"><h3>All users</h3></div>
+    </div>
+    <table class="table table-striped" style="background-color: #ffffff">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Role</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text=" ${user.getId()}"></td>
+            <td th:text=" ${user.getUsername()}"></td>
+            <td th:text=" ${user.getLastName()}"></td>
+            <td th:text=" ${user.getAge()}"></td>
+            <td th:text=" ${user.getRoles()}"></td>
+            <td><a th:href="@{/admin/user-update/{id}(id=${user.getId()})}" class="btn btn-primary">Edit</a>
+            </td>
+            <td><a th:href="@{/admin/user-delete/{id}(id=${user.getId()})}"
+                   class="btn btn-danger">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>

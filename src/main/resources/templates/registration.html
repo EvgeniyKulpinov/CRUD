@@ -1,25 +1,59 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="eu">
+<html lang="eu">
 <head>
     <meta charset="UTF-8">
-    <title>Create user</title>
+    <title>admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
 </head>
 <body>
-<form action="#" th:action="@{/registration}" th:object="${user}" method="post">
-    <label for="username">Username</label>
-    <input type="text" th:field="*{username}" id="username" placeholder="Username">
-    <br/>
-    <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password" placeholder="Password">
-    <br/>
-    <label for="passwordConfirm">Password Confirm</label>
-    <input type="text" th:field="*{passwordConfirm}" id="passwordConfirm" placeholder="Password Confirm">
-    <br/>
-    <input type="submit" value="Registration">
-    <br/>
-    <h1 th:text="${Error}"></h1>
-</form>
+</br></br></br>
+<div>
+    <form method="POST" action="/login">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 col-lg-offset-4">
+                    <h1>Please sing in</h1>
+                    <div>
+                        <label for="username">Username</label>
+                        <input type="text" th:field="*{username}" id="username" placeholder="Username"
+                               class="form-control">
+                        <br/>
+                        <label for="password">Password</label>
+                        <input type="text" th:field="*{password}" id="password" placeholder="Password"
+                               class="form-control">
+                        <br/>
+                        <label for="passwordConfirm">Password Confirm</label>
+                        <input type="text" th:field="*{passwordConfirm}" id="passwordConfirm"
+                               placeholder="Password Confirm" class="form-control">
+                        <br/>
+                        <label for="lastName">Last Name</label>
+                        <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name"
+                               class="form-control">
+                        <br/>
+                        <label for="age">Age</label>
+                        <input type="text" th:field="*{age}" id="age" placeholder="Age"
+                               class="form-control">
+                        <br/>
+                        <input type="submit" class="btn btn-info btn-block" value="Registration">
+                        <br/>
+                        <h1 th:text="${Error}"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
 </html>

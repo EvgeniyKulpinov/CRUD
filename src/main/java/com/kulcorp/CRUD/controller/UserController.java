@@ -20,6 +20,11 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping(value = "/admin")
+    public String getAdminPage() {
+        return "admin";
+    }
+
     @GetMapping(value = "/login")
     public String getLoginPage() {
         return "login";
@@ -28,7 +33,7 @@ public class UserController {
     @GetMapping(value = "/user")
     public String getUserPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
-        return "user";
+        return "user1";
     }
 
     @GetMapping("/registration")

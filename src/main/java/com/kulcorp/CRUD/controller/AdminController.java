@@ -5,44 +5,46 @@ import com.kulcorp.CRUD.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/admin")
 @AllArgsConstructor
 public class AdminController {
 
     private UserService service;
 
-    @RequestMapping
-    public String getAdminPage(Model model) {
-        model.addAttribute("users", service.getAll());
-        return "admin";
+
+    @GetMapping("/getUsers")
+    public List<User> getAdminPage() {
+        return service.getAll();
     }
 
-    @GetMapping("/user-create")
-    private String createFromUser(User user) {
-        return "user-create";
+    @GetMapping("/deleteForm/{id}")
+    public User getDeleteForm(@PathVariable("id") Long id) {
+        return service.getUserById(id);
     }
 
-    @PostMapping("/user-create")
-    public String createUser(User user, Model model) {
+//    @GetMapping("/user-create")
+//    private String createFromUser(User user) {
+//        return "admin";
+//    }
 
-        if (!user.getPassword().equals(user.getPasswordConfirm())) {
-            model.addAttribute("Error", "Пароли не совпадают");
-            return "user-create";
-        }
+    @RequestMapping(value = "/user-create", method = RequestMethod.POST)
+    public String createUser(@ModelAttribute("user") User user) {
+
+//        if (!user.getPassword().equals(user.getPasswordConfirm())) {
+//            model.addAttribute("Error", "Пароли не совпадают");
+//        }
         if (!service.saveUser(user)) {
-            model.addAttribute("Error", "Пользователь с таким именем уже существует");
-            return "user-create";
+//            model.addAttribute("Error", "Пользователь с таким именем уже существует");
         }
-        return "redirect:/admin";
+        return "redirect:/admin";//!!!!
     }
 
-    @GetMapping("/user-delete/{id}")
+    @RequestMapping("/user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         service.deleteById(id);
         return "redirect:/admin";
