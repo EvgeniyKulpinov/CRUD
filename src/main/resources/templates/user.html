@@ -16,13 +16,17 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2" style="background-color: #0f2233"><h4><span style="color: white">Admin@mail.ru</span></h4>
+        <div class="col-md-2" style="background-color: #0f2233"><h4><span style="color: white" id="userName"></span>
+        </h4>
         </div>
         <div class="col-md-1" style="background-color: #0f2233"><h4><span style="color: white">whit roles:</span></h4>
         </div>
-        <div class="col-md-8" style="background-color: #0f2233"><h4><span style="color: white">ADMIN USER</span></h4>
+        <div class="col-md-8" style="background-color: #0f2233"><h4><span style="color: white" id="userRole"></span>
+        </h4>
         </div>
-        <div class="col-md-1" style="background-color: #0f2233"><h4><span style="color: white">Logout</span></h4></div>
+        <div class="col-md-1" style="background-color: #0f2233">
+            <h4><a style="color: white" th:href="@{/logout}">Logout</a></h4>
+        </div>
     </div>
 </div>
 <div class="container-fluid">
@@ -30,35 +34,26 @@
         <div class="col-md-2">
             <a href="/user" class="btn btn-info btn-block">User</a>
         </div>
-        <div class="container-fluid col-md-10" style="background-color: #fcfcfc" th:switch="${users}">
-            <div th:case="*">
-                <h1>User information-page</h1>
-                <div class="container-fluid">
-                    <div class="tab-content">
-                        <div class="panel panel-default" style="background-color: #fcfcfc">
-                            <div class="panel-body"><h4>About user</h4></div>
-                        </div>
-                        <table class="table table-striped" style="background-color: #ffffff">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Username</th>
-                                <th>Last Name</th>
-                                <th>Age</th>
-                                <th>Role</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="user : ${users}">
-                                <td th:text=" ${user.getId()}"></td>
-                                <td th:text=" ${user.getUsername()}"></td>
-                                <td th:text=" ${user.getLastName()}"></td>
-                                <td th:text=" ${user.getAge()}"></td>
-                                <td th:text=" ${user.getRoles()}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+        <div class="container-fluid col-md-10" style="background-color: #fcfcfc">
+            <h1>User information-page</h1>
+            <div class="container-fluid">
+                <div class="tab-content">
+                    <div class="panel panel-default" style="background-color: #fcfcfc">
+                        <div class="panel-body"><h4>About user</h4></div>
                     </div>
+                    <table class="table table-striped" style="background-color: #f6f6f6">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -68,5 +63,36 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+<script>
+
+    $(document).ready(function () {
+        getUsersInfo()
+    });
+
+    function getUsersInfo() {
+        $.ajax({
+            type: "GET",
+            url: "/user/userInfo",
+            dataType: 'json',
+            success: function (user) {
+                let tbody = $('#userTableBody');
+                tbody.empty();
+                let roles = user.roles.map(role => role.role).join(', ');
+                let dynamicTR = `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.lastName}</td>
+                            <td>${user.age}</td>
+                            <td>${roles}</td>
+                        </tr>`;
+                document.getElementById('userName').innerHTML = user.username;
+                document.getElementById('userRole').innerHTML = roles;
+                tbody.append(dynamicTR);
+            },
+        });
+    }
+
+</script>
 </body>
 </html>

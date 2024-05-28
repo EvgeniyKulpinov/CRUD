@@ -34,18 +34,32 @@ public class UserDetailsServiceImpl implements UserService, UserDetailsService {
     public boolean saveUser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
         if (userFromDB != null) {
-            return false;
+            return true;
         }
         user.setRoles(Set.of(roleRepository.findById(1L).get()));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return true;
+        return false;
     }
 
     @Override
-    public void userUpdate(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    public boolean userUpdate(User user) {
+
+        if (user.getPassword().isEmpty()) {
+            user.setPassword(userRepository.findById(user.getId()).get().getPassword());
+        } else {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+
+        if (userRepository.findById(user.getId()).get().getUsername().equals(user.getUsername())) {
+            userRepository.save(user);
+            return true;
+        }
+        if (userRepository.findByUsername(user.getUsername()) != null) {
+            return false;
+        }
         userRepository.save(user);
+        return true;
     }
 
     @Override

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="eu">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="eu">
 <head>
     <meta charset="UTF-8">
     <title>admin</title>
@@ -16,13 +18,17 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2" style="background-color: #0f2233"><h4><span style="color: white">Admin@mail.ru</span></h4>
+        <div class="col-md-2" style="background-color: #0f2233"><h4><span style="color: white" id="adminName"></span>
+        </h4>
         </div>
         <div class="col-md-1" style="background-color: #0f2233"><h4><span style="color: white">whit roles:</span></h4>
         </div>
-        <div class="col-md-8" style="background-color: #0f2233"><h4><span style="color: white">ADMIN USER</span></h4>
+        <div class="col-md-8" style="background-color: #0f2233"><h4><span style="color: white" id="adminRole"></span>
+        </h4>
         </div>
-        <div class="col-md-1" style="background-color: #0f2233"><h4><span style="color: white">Logout</span></h4></div>
+        <div class="col-md-1" style="background-color: #0f2233">
+            <h4><a style="color: white" th:href="@{/logout}">Logout</a></h4>
+        </div>
     </div>
 </div>
 <div class="container-fluid">
@@ -31,11 +37,12 @@
             <a href="/admin" class="btn btn-info btn-block">Admin</a>
             <a href="/user" class="btn btn-info btn-block">User</a>
         </div>
-        <div class="container-fluid col-md-10" style="background-color: #fcfcfc">
+        <div class="container-fluid col-md-10" style="background-color: #f6f6f6">
             <h1>Admin panel</h1>
             <div class="container-fluid">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" data-target="#tablePanel">Users table</a></li>
+                    <li class="active"><a data-toggle="tab" data-target="#tablePanel" onclick="getUsers()">Users
+                        table</a></li>
                     <li><a data-toggle="tab" data-target="#user-create">Create users</a></li>
                 </ul>
                 <div class="tab-content">
@@ -68,8 +75,9 @@
                                             <input type="text" id="age" placeholder="Age" name="age"
                                                    class="form-control">
                                             <br/>
-                                            <input type="submit" value="Create user"
-                                                   class="btn btn-success" onclick="addUser()">
+                                            <button type="button" class="btn btn-success"
+                                                    onclick="addUser()">Create user
+                                            </button>
                                             <br/>
                                         </div>
                                     </div>
@@ -89,8 +97,8 @@
                                 <th>Last Name</th>
                                 <th>Age</th>
                                 <th>Role</th>
-                                <th class="text-center">Edit</th>
-                                <th class="text-center">Delete</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -100,58 +108,45 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button class="close" data-dismiss="modal">x</button>
+                                        <button class="close" data-dismiss="modal" onclick="addUser()">x</button>
                                         <h4 class="modal-title">Edit user</h4>
                                     </div>
                                     <div class="modal-body text-center">
-                                        <form id="delete-form">
-                                            <label for="id">Id</label>
-                                            <input readonly type="number" id="id" placeholder="Id" name="id"
+                                        <form id="updateForm">
+                                            <label for="idEdit">Id</label>
+                                            <input readonly type="number" id="idEdit" placeholder="Id" name="id"
                                                    class="form-control">
                                             <br/>
-                                            <label for="username">Username</label>
-                                            <input type="text" id="username" placeholder="Username" name="username"
+                                            <label for="usernameEdit">Username</label>
+                                            <input type="text" id="usernameEdit" placeholder="Username" name="username"
                                                    class="form-control">
                                             <br/>
-                                            <label for="password">Password</label>
-                                            <input type="text" id="password" placeholder="Password" name="password"
+                                            <label for="passwordEdit">Password</label>
+                                            <input type="text" id="passwordEdit" placeholder="Password" name="password"
                                                    class="form-control">
                                             <br/>
-                                            <label for="lastName">Last Name</label>
-                                            <input type="text" id="lastName" placeholder="Last Name" name="lastName"
+                                            <label for="lastNameEdit">Last Name</label>
+                                            <input type="text" id="lastNameEdit" placeholder="Last Name" name="lastName"
                                                    class="form-control">
                                             <br/>
-                                            <label for="age">Age</label>
-                                            <input type="text" id="age" placeholder="Age" name="age"
+                                            <label for="ageEdit">Age</label>
+                                            <input type="text" id="ageEdit" placeholder="Age" name="age"
                                                    class="form-control">
                                             <br/>
-                                            <div class="dropdown">
-                                                <button class="btn btn-info btn-block dropdown-toggle"
-                                                        data-toggle="dropdown"> Roles <span
-                                                        class="caret"></span></button>
-                                                <ul class="dropdown-menu col-md-12">
-                                                    <li>
-                                                        <label class="btn-primary btn-block text-center">
-                                                            <input type="checkbox" id="roles" value="1" checked>
-                                                            Role User
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label class="btn-primary btn-block text-center">
-                                                            <input type="checkbox" id="roles" value="2" checked>
-                                                            Role Admin
-                                                        </label>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <label for="roleEdit">Role</label>
+                                            <select multiple class="form-control text-center" id="roleEdit"
+                                                    name="roles">
+                                                <option value="1" name="role">ROLE_USER</option>
+                                                <option value="2" name="role">ROLE_ADMIN</option>
+                                            </select>
                                             <br/>
-                                            <input type="submit" value="Update user"
-                                                   class="btn btn-success btn-block">
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button class="btn btn-primary">Edit</button>
+                                        <button class="btn btn-default" data-dismiss="modal" onclick="addUser()">Close
+                                        </button>
+                                        <button class="btn btn-primary" data-dismiss="modal" onclick="editUser()">Edit
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +159,7 @@
                                         <h4 class="modal-title">Delete user</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        <form id="deleteForm">
                                             <label for="idDelete">Id</label>
                                             <input disabled type="number" id="idDelete" placeholder="Id"
                                                    class="form-control">
@@ -185,31 +180,19 @@
                                             <input disabled type="text" id="ageDelete" placeholder="Age"
                                                    class="form-control">
                                             <br/>
-                                            <div class="dropdown">
-                                                <button class="btn btn-info btn-block dropdown-toggle disabled"
-                                                        data-toggle="dropdown"> Roles <span
-                                                        class="caret"></span></button>
-                                                <ul class="dropdown-menu col-md-12">
-                                                    <li>
-                                                        <label class="btn-primary btn-block text-center">
-                                                            <input type="checkbox" id="roles" value="1" checked>
-                                                            Role User
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <label class="btn-primary btn-block text-center">
-                                                            <input type="checkbox" id="roles" value="2" checked>
-                                                            Role Admin
-                                                        </label>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <label for="roleDelete">Role</label>
+                                            <select multiple class="form-control text-center" id="roleDelete" disabled>
+                                                <option>ROLE_USER</option>
+                                                <option>ROLE_ADMIN</option>
+                                            </select>
                                             <br/>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button class="btn btn-danger" onclick="Delete()">Delete</button>
+                                        <button class="btn btn-danger" data-dismiss="modal"
+                                                onclick="deleteUser(document.getElementById('idDelete').value)">Delete
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -227,6 +210,11 @@
 
 <script>
     $(document).ready(function () {
+        getUsers()
+        getUserInfo()
+    });
+
+    function getUsers() {
         $.ajax({
             type: "GET",
             url: "/admin/getUsers",
@@ -235,20 +223,22 @@
                 let tbody = $('#tableBody');
                 tbody.empty();
                 users.forEach(function (user) {
-                    let dynamicTR =`
+                    let roles = user.roles.map(role => role.role).join(', ');
+                    let dynamicTR = `
                         <tr>
                             <td>${user.id}</td>
                             <td>${user.username}</td>
                             <td>${user.lastName}</td>
                             <td>${user.age}</td>
-                            <td>${user.roles[0].role}</td>
+                            <td>${roles}</td>
                             <td>
-                            <button class='btn btn-primary' data-toggle='modal' data-target='#edit'> Edit
+                            <button class='btn btn-primary' data-toggle='modal' data-target='#edit'
+                            onClick='editForm(${user.id})'> Edit
                             </button>
                             </td>
                             <td>
                             <button class='btn btn-danger' data-toggle='modal' data-target='#delete'
-                            onClick='DeleteForm(${user.id})'> Delete
+                            onClick='deleteForm(${user.id})'> Delete
                             </button>
                             </td>
                         </tr>`;
@@ -256,7 +246,20 @@
                 })
             },
         });
-    });
+    }
+
+    function getUserInfo() {
+        $.ajax({
+            type: "GET",
+            url: "/admin/getAdmin",
+            dataType: "JSON",
+            success: function (user) {
+                let roles = user.roles.map(role => role.role).join(', ');
+                document.getElementById('adminName').innerHTML = user.username;
+                document.getElementById('adminRole').innerHTML = roles;
+            }
+        });
+    }
 
     function addUser() {
         $.ajax({
@@ -265,40 +268,87 @@
             dataType: "JSON",
             data: $("#create").serialize(),
             success: function (data) {
-                $('#username').val("");
-                $('#password').val("");
-                $('#passwordConfirm').val("");
-                $('#lastName').val("");
-                $('#age').val("");
-                console.log(data);
+                if (data.status === "success") {
+                    $('#username').val("");
+                    $('#password').val("");
+                    $('#passwordConfirm').val("");
+                    $('#lastName').val("");
+                    $('#age').val("");
+                    alert("The user has been added");
+                } else if (data.status === "errorPassword") {
+                    alert("Passwords don't match");
+                } else if (data.status === "errorName") {
+                    alert("A user with that name already exists");
+                }
+                getUsers();
             }
         });
     }
 
-    function Delete(id)
-    {
+    function editUser() {
         $.ajax({
             type: "POST",
-            url : "/admin/user-delete/" + id,
-            dataType : "JSON",
+            url: "/admin/user-update",
+            dataType: "JSON",
+            data: $("#updateForm").serialize(),
+            success: function (data) {
+                if (data.status === "success") {
+                    getUsers();
+                } else {
+                    $('#usernameEdit').val("");
+                    alert("A user with that name already exists");
+                }
+            }
         });
     }
-    function DeleteForm(id) {
+
+    function deleteUser(userId) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/user-delete/" + userId,
+            dataType: "JSON",
+            success: function () {
+                $('#idDelete').val("");
+                $('#usernameDelete').val("");
+                $('#passwordDelete').val("");
+                $('#lastNameDelete').val("");
+                $('#ageDelete').val("");
+                getUsers();
+            }
+        });
+    }
+
+    function deleteForm(id) {
         $.ajax({
             type: "GET",
-            url: "/admin/deleteForm/" + id,
+            url: "/admin/userForm/" + id,
             dataType: "JSON",
             success: function (user) {
                 $('#idDelete').val(user.id);
                 $('#usernameDelete').val(user.username);
-                $('#passwordDelete').val(user.password);
+                $('#passwordDelete').val("");
                 $('#lastNameDelete').val(user.lastName);
                 $('#ageDelete').val(user.age);
-                console.log(user);
+                $('#roleDelete').val(user.roles.map(role => role.role).join(', '));
             }
         });
     }
-</script>
+
+    function editForm(id) {
+        $.ajax({
+            type: "GET",
+            url: "/admin/userForm/" + id,
+            dataType: "JSON",
+            success: function (user) {
+                $('#idEdit').val(user.id);
+                $('#usernameEdit').val(user.username);
+                $('#passwordEdit').val("");
+                $('#lastNameEdit').val(user.lastName);
+                $('#ageEdit').val(user.age);
+                $('#roleEdit').val(user.roles.map(role => role.role).join(', '));
+            }
+        });
+    }
 
 </script>
 </body>

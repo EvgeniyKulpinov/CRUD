@@ -3,8 +3,7 @@ package com.kulcorp.CRUD.controller;
 import com.kulcorp.CRUD.model.User;
 import com.kulcorp.CRUD.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,43 +21,40 @@ public class AdminController {
         return service.getAll();
     }
 
-    @GetMapping("/deleteForm/{id}")
-    public User getDeleteForm(@PathVariable("id") Long id) {
+    @GetMapping("/userForm/{id}")
+    public User userForm(@PathVariable("id") Long id) {
         return service.getUserById(id);
     }
 
-//    @GetMapping("/user-create")
-//    private String createFromUser(User user) {
-//        return "admin";
-//    }
+    @GetMapping(value = "/getAdmin")
+    public User getUserPage(@AuthenticationPrincipal User user) {
+        return user;
+    }
 
-    @RequestMapping(value = "/user-create", method = RequestMethod.POST)
+    @PostMapping(value = "/user-create")
     public String createUser(@ModelAttribute("user") User user) {
 
-//        if (!user.getPassword().equals(user.getPasswordConfirm())) {
-//            model.addAttribute("Error", "Пароли не совпадают");
-//        }
-        if (!service.saveUser(user)) {
-//            model.addAttribute("Error", "Пользователь с таким именем уже существует");
+        if (!user.getPassword().equals(user.getPasswordConfirm())) {
+            return "{\"status\":\"errorPassword\"}";
         }
-        return "redirect:/admin";//!!!!
+        if (service.saveUser(user)) {
+            return "{\"status\":\"errorName\"}";
+        }
+        return "{\"status\":\"success\"}";
     }
 
-    @RequestMapping("/user-delete/{id}")
+    @PostMapping("/user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         service.deleteById(id);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/user-update/{id}")
-    public String updateUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", service.getUserById(id));
-        return "user-update";
+        return "{\"status\":\"success\"}";
     }
 
     @PostMapping("/user-update")
-    public String updateUser(User user) {
-        service.userUpdate(user);
-        return "redirect:/admin";
+    public String updateUser(@ModelAttribute("user") User user) {
+
+        if (!service.userUpdate(user)) {
+            return "{\"status\":\"errorName\"}";
+        }
+        return "{\"status\":\"success\"}";
     }
 }
