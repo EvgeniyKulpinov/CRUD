@@ -46,14 +46,14 @@
                     <table class="table table-striped" style="background-color: #f6f6f6">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Last Name</th>
-                            <th>Age</th>
-                            <th>Role</th>
+                            <th>Exchangerate</th>
+                            <th>Exchange rate</th>
+                            <th>Abstractapi</th>
+                            <th>Reverse Exchange rate</th>
+                            <th>Benefit</th>
                         </tr>
                         </thead>
-                        <tbody id="userTableBody">
+                        <tbody id="marketTableBody">
                         </tbody>
                     </table>
                 </div>
@@ -69,6 +69,7 @@
 
     $(document).ready(function () {
         getUsersInfo()
+        ExchangeRates()
     });
 
     function getUsersInfo() {
@@ -77,24 +78,35 @@
             url: "/user/userInfo",
             dataType: 'json',
             success: function (user) {
-                let tbody = $('#userTableBody');
-                tbody.empty();
                 let roles = user.roles.map(role => role.role).join(', ');
-                let dynamicTR = `
-                        <tr>
-                            <td>${user.id}</td>
-                            <td>${user.username}</td>
-                            <td>${user.lastName}</td>
-                            <td>${user.age}</td>
-                            <td>${roles}</td>
-                        </tr>`;
                 document.getElementById('userName').innerHTML = user.username;
                 document.getElementById('userRole').innerHTML = roles;
-                tbody.append(dynamicTR);
+            },
+        });
+    }
+
+    function ExchangeRates() {
+        $.ajax({
+            type: "GET",
+            url: "/cashMarket/getCourse",
+            dataType: 'json',
+            success: function (exchangeRatesList) {
+                let tbody = $('#marketTableBody');
+                tbody.empty();
+                exchangeRatesList.forEach(function (exchangeRates) {
+                    let dynamicTR = `
+                        <tr>
+                            <td>${exchangeRates.currencyPair1}</td>
+                            <td>${exchangeRates.course1}</td>
+                            <td>${exchangeRates.currencyPair2}</td>
+                            <td>${exchangeRates.course2}</td>
+                            <td>${exchangeRates.benefit}</td>
+                        </tr>`;
+                    tbody.append(dynamicTR);
+                })
             },
         });
     }
 
 </script>
 </body>
-</html>

@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private long id;
 
     @Column
-    private String username; //сделать уникальным
+    private String username;
 
     @Column
     private String password;

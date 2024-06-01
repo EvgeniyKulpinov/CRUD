@@ -33,4 +33,9 @@ public class CommonController {
     public String registration() {
         return "registration";
     }
+
+    @GetMapping("/cashMarket")
+    public String cashMarket() {
+        return "cashMarket";
+    }
 }
