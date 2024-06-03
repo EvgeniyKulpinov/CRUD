@@ -4,10 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class ExchangeRates {
+public class ExchangeRate {
 
     private String currencyPair1;
 

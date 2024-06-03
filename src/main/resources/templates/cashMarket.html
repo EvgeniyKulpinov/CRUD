@@ -2,7 +2,7 @@
 <html lang="eu">
 <head>
     <meta charset="UTF-8">
-    <title>admin</title>
+    <title>CashMarket</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -37,12 +37,19 @@
             <a href="/cashMarket" class="btn btn-info btn-block">Cash Market</a>
         </div>
         <div class="container-fluid col-md-10" style="background-color: #fcfcfc">
-            <h1>User information-page</h1>
+            <h1>Cash market</h1>
             <div class="container-fluid">
-                <div class="tab-content">
-                    <div class="panel panel-default" style="background-color: #fcfcfc">
-                        <div class="panel-body"><h4>About user</h4></div>
-                    </div>
+                <div class="tab-content ">
+                    <div class="panel panel-default" style="background-color: #fcfcfc"></div>
+                    <form id="currenciesForm">
+                        <label for="currencies">Currencies</label>
+                        <select multiple class="form-control text-center required" id="currencies" name="currencies">
+                            <option value="RUB" name="currency">Ruble</option>
+                            <option value="EUR" name="currency">Euro</option>
+                            <option value="CNY" name="currency">Yuan</option>
+                        </select>
+                    </form>
+                    <button class="btn btn-primary col-md-2 col-md-offset-5" onclick="GetExchangeRates()">Show</button>
                     <table class="table table-striped" style="background-color: #f6f6f6">
                         <thead>
                         <tr>
@@ -69,7 +76,6 @@
 
     $(document).ready(function () {
         getUsersInfo()
-        ExchangeRates()
     });
 
     function getUsersInfo() {
@@ -85,11 +91,12 @@
         });
     }
 
-    function ExchangeRates() {
+    function GetExchangeRates() {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/cashMarket/getCourse",
             dataType: 'json',
+            data: $("#currenciesForm").serialize(),
             success: function (exchangeRatesList) {
                 let tbody = $('#marketTableBody');
                 tbody.empty();
@@ -104,9 +111,8 @@
                         </tr>`;
                     tbody.append(dynamicTR);
                 })
-            },
+            }
         });
     }
-
 </script>
 </body>
