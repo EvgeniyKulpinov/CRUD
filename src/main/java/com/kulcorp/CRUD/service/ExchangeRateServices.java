@@ -6,6 +6,8 @@ import com.kulcorp.CRUD.dto.ExchangeRate;
 import com.kulcorp.CRUD.dto.Response;
 import com.kulcorp.CRUD.dto.ResponseAbstractapi;
 import com.kulcorp.CRUD.dto.ResponseExchangerate;
+import lombok.AllArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -14,7 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ExchangeRateServices {
+
+    private final Environment env;
 
     public List<ExchangeRate> getCourse(List<String> currencies) {
 
@@ -56,9 +61,10 @@ public class ExchangeRateServices {
     }
 
     public Response getCourseFromAbstractapi() {
+        String key = env.getProperty("keyAbstractapi");
         String url = "https://exchange-rates.abstractapi.com/v1/live/";
         String urlTemplate = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("api_key", "36bdc0604621481aabd457f97825d17e")
+                .queryParam("api_key", key)
                 .queryParam("base", "USD")
                 .queryParam("target", "EUR,RUB,CNY")
                 .encode()
@@ -76,7 +82,8 @@ public class ExchangeRateServices {
     }
 
     public Response getCourseFromExchangerate() {
-        String url = "https://v6.exchangerate-api.com/v6/c4add2d204650796af6b95ef/latest/USD";
+        String key = env.getProperty("keyExchangerate");
+        String url = "https://v6.exchangerate-api.com/v6/" + key + "/latest/USD";
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper mapper = new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

@@ -1,8 +1,10 @@
+keyExchangerate: ${KEY_EXCAPI}
+keyAbstractapi: ${KEY_ABSAPI}
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/my_first_base
-    username: Boss
-    password: 2309
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -13,3 +15,4 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
