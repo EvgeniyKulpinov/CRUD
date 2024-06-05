@@ -1,4 +1,4 @@
-package com.kulcorp.CRUD.dto;
+package com.kulcorp.CRUD.dto.api;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResponseAbstractapi {
+public class ResponseAbstractapiDTO {
 
     private String base;
 

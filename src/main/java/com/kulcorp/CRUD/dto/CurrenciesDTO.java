@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Currencies {
+public class CurrenciesDTO {
 
     private List<String> currencies;
 }

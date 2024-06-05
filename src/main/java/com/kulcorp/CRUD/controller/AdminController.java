@@ -1,7 +1,7 @@
 package com.kulcorp.CRUD.controller;
 
 import com.kulcorp.CRUD.model.User;
-import com.kulcorp.CRUD.service.UserService;
+import com.kulcorp.CRUD.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

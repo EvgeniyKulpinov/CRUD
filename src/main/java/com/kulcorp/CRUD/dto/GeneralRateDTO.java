@@ -5,7 +5,11 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ExchangeRate {
+public class GeneralRateDTO {
+
+    private String siteName1;
+
+    private String siteName2;
 
     private String currencyPair1;
 

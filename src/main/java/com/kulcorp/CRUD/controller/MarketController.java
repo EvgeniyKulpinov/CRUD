@@ -1,8 +1,8 @@
 package com.kulcorp.CRUD.controller;
 
-import com.kulcorp.CRUD.dto.Currencies;
-import com.kulcorp.CRUD.dto.ExchangeRate;
-import com.kulcorp.CRUD.service.ExchangeRateServices;
+import com.kulcorp.CRUD.dto.CurrenciesDTO;
+import com.kulcorp.CRUD.dto.GeneralRateDTO;
+import com.kulcorp.CRUD.service.api.GeneralRateServices;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +13,10 @@ import java.util.*;
 @AllArgsConstructor
 public class MarketController {
 
-    ExchangeRateServices services;
+    GeneralRateServices services;
 
     @PostMapping(value = "/getCourse")
-    public List<ExchangeRate> getCourse(@ModelAttribute("currencies") Currencies currencies){
+    public List<GeneralRateDTO> getCourse(@ModelAttribute("currencies") CurrenciesDTO currencies){
         return services.getCourse(currencies.getCurrencies());
     }
 }

@@ -1,4 +1,4 @@
-package com.kulcorp.CRUD.service;
+package com.kulcorp.CRUD.service.user;
 
 import com.kulcorp.CRUD.dao.RoleRepository;
 import com.kulcorp.CRUD.dao.UserRepository;

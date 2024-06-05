@@ -1,5 +1,12 @@
-keyExchangerate: ${KEY_EXCAPI}
-keyAbstractapi: ${KEY_ABSAPI}
+keys:
+  keyExchangerate: ${KEY_EXCAPI}
+  keyAbstractapi: ${KEY_ABSAPI}
+  keyOpenexchangerates: ${KEY_OEXAPI}
+
+urls:
+  urlExchangerate: ${URL_EXCAPI}
+  urlAbstractapi: ${URL_ABSAPI}
+  urlOpenexchangerates: ${URL_OEXAPI}
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/my_first_base
