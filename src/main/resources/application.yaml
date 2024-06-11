@@ -9,17 +9,16 @@ urls:
   urlOpenexchangerates: ${URL_OEXAPI}
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/my_first_base
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:postgres}
+    url: jdbc:postgresql://db:5432/my_first_base
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     properties:
       hibernate:
         format_sql: true
-

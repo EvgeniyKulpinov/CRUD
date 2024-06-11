@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'evgeniykulpinov/docker-spring-boot-postgres:0.0.2'
+    ports:
+      - '8080:8080'
+    build:
+      context: .
+    container_name: app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/my_first_base
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      KEY_EXCAPI: ${KEY_EXCAPI}
+      KEY_ABSAPI: ${KEY_ABSAPI}
+      KEY_OEXAPI: ${KEY_OEXAPI}
+      URL_EXCAPI: ${URL_EXCAPI}
+      URL_ABSAPI: ${URL_ABSAPI}
+      URL_OEXAPI: ${URL_OEXAPI}
+
+  db:
+    image: 'postgres:16-alpine'
+    ports:
+      - '5432:5432'
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_DB: my_first_base
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./initer:/docker-entrypoint-initdb.d
