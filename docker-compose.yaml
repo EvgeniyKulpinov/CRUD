@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   app:
-    image: 'evgeniykulpinov/docker-spring-boot-postgres:0.0.2'
-    ports:
-      - '8080:8080'
+    image: 'evgeniykulpinov/docker-spring-boot-postgres:latest'
     build:
       context: .
+    ports:
+      - '8089:8080'
     container_name: app
     restart: always
     depends_on:
@@ -25,12 +25,10 @@ services:
   db:
     image: 'postgres:16-alpine'
     ports:
-      - '5432:5432'
+      - '5433:5432'
     container_name: db
     restart: always
     environment:
       POSTGRES_DB: my_first_base
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - ./initer:/docker-entrypoint-initdb.d

@@ -1,0 +1,18 @@
+name: CICD
+on:
+  push:
+    branches: [master]
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login Docker
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
+      - name: Build image
+        run: docker build -t evgeniykulpinov/docker-spring-boot-postgres:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: docker push evgeniykulpinov/docker-spring-boot-postgres:latest

@@ -15,7 +15,6 @@ public class AdminController {
 
     private UserService service;
 
-
     @GetMapping("/getUsers")
     public List<User> getAdminPage() {
         return service.getAll();
