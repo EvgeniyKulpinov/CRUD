@@ -27,3 +27,20 @@ jobs:
           source: "docker-compose.yaml"
           target: "/home/${{ secrets.DEPLOY_USERNAME }}"
           overwrite: true
+  deploy_app:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [ build_and_push ]
+    steps:
+      - name: Connect with SSH and Deploy
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            cd /home/${{ secrets.DEPLOY_USERNAME }}
+            sudo docker-compose down
+            sudo docker rmi evgeniykulpinov/docker-spring-boot-postgres:latest
+            sudo docker pull evgeniykulpinov/docker-spring-boot-postgres:latest
+            sudo docker-compose up --force-recreate -d
