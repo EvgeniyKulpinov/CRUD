@@ -20,4 +20,4 @@ jobs:
       - name: Copy docker-compose.yaml
         run: scp -i C:\Users\User\.ssh\id_rsa C:\Users\User\IdeaProjects\CRUD\docker-compose.yaml "${{ secrets.SSH_USER }}":/home/jenya
 
-
+#sdcsd
