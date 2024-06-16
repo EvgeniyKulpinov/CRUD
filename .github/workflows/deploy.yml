@@ -14,5 +14,10 @@ jobs:
       - name: Build image
         run: docker build -t evgeniykulpinov/docker-spring-boot-postgres:latest .
 
-      - name: Push Docker image to Docker Hub
+      - name: Push image
         run: docker push evgeniykulpinov/docker-spring-boot-postgres:latest
+
+      - name: Copy docker-compose.yaml
+        run: scp -i C:\Users\User\.ssh\id_rsa C:\Users\User\IdeaProjects\CRUD\docker-compose.yaml "${{ secrets.SSH_USER }}":/home/jenya
+
+
