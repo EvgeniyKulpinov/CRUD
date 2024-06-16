@@ -1,7 +1,7 @@
 name: CICD
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
@@ -43,4 +43,4 @@ jobs:
             sudo docker-compose down
             sudo docker rmi evgeniykulpinov/docker-spring-boot-postgres:latest
             sudo docker pull evgeniykulpinov/docker-spring-boot-postgres:latest
-            sudo docker-compose up --force-recreate -d
+            sudo -E docker-compose --env-file .env up -d
