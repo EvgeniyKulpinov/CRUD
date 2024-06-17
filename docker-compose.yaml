@@ -3,10 +3,12 @@ version: '3.7'
 services:
   app:
     image: 'evgeniykulpinov/docker-spring-boot-postgres:latest'
+#    build:
+#      context: .
     ports:
       - '8091:8080'
     container_name: app
-    restart: always
+#    restart: always
     depends_on:
       - db
     environment:
