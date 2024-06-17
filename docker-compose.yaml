@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
   app:
-    image: 'evgeniykulpinov/docker-spring-boot-postgres:latest'
-#    build:
-#      context: .
+#    image: 'evgeniykulpinov/docker-spring-boot-postgres:latest'
+    build:
+      context: .
     ports:
       - '8091:8080'
     container_name: app
@@ -23,9 +23,9 @@ services:
       URL_OEXAPI: ${URL_OEXAPI}
 
   db:
-    image: 'postgres:16-alpine'
+    image: 'postgres:latest'
     ports:
-      - '5438:5432'
+      - '5439:5432'
     container_name: db
     restart: always
     environment:
