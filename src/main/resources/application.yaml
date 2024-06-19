@@ -8,6 +8,9 @@ urls:
   urlAbstractapi: ${URL_ABSAPI}
   urlOpenexchangerates: ${URL_OEXAPI}
 spring:
+  liquibase:
+    change-log: classpath:db/changelog/changelog.xml
+    enabled: true
   datasource:
     url: jdbc:postgresql://db:5432/my_first_base
     username: ${POSTGRES_USER}
@@ -15,7 +18,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
