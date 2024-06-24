@@ -11,7 +11,7 @@ spring:
     change-log: classpath:db/changelog/changelog.xml
     enabled: true
   datasource:
-    url: jdbc:postgresql://db-service:5432/my_first_base
+    url: jdbc:postgresql://db:5432/my_first_base
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
