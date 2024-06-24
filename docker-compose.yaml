@@ -7,6 +7,8 @@ services:
       - '8091:8080'
     container_name: app
     restart: always
+    env_file:
+      - .env
     depends_on:
       - db
     environment:
@@ -26,6 +28,8 @@ services:
       - '5439:5432'
     container_name: db
     restart: always
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: my_first_base
       POSTGRES_USER: ${DB_USER}

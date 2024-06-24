@@ -33,21 +33,27 @@ public class GeneralRateServices {
                         GeneralRateDTO rates = new GeneralRateDTO();
 
                         double course = response1.getExchangeRates().get(currency);
+                        String formattedCourse = String.format("%.5f", course);
                         double reverseCourse = 1 / response2.getExchangeRates().get(currency);
+                        String formattedReverseCourse = String.format("%.5f", reverseCourse);
                         double benefit = (course * reverseCourse - 1) * 100;
+                        String formattedBenefit = String.format("%.5f", benefit);
 
                         rates.setCurrencyPair1(response1.getBase() + currency);
-                        rates.setCourse1(course);
+                        rates.setCourse1(Double.parseDouble(formattedCourse));
                         rates.setSiteName1(response1.getSiteName());
                         rates.setCurrencyPair2(currency + response1.getBase());
-                        rates.setCourse2(reverseCourse);
+                        rates.setCourse2(Double.parseDouble(formattedReverseCourse));
                         rates.setSiteName2(response2.getSiteName());
-                        rates.setBenefit((int) benefit + " %");
-                        exchangeRatesList.add(rates);
+                        rates.setBenefit(Double.parseDouble(formattedBenefit) + " %");
+                        if (benefit > 0) {
+                            exchangeRatesList.add(rates);
+                        }
                     }
                 }
             }
         }
+        exchangeRatesList.sort((o1, o2) -> o2.getBenefit().compareTo(o1.getBenefit()));
         return exchangeRatesList;
     }
 }

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crud-app
+  template:
+    metadata:
+      labels:
+        app: crud-app
+    spec:
+      containers:
+        - name: crud-app
+          image: evgeniykulpinov/crud-app:latest
+          env:
+          - name: KEY_EXCAPI
+            valueFrom:
+              secretKeyRef:
+                name: crud-secrets
+                key: KEY_EXCAPI
+          - name: KEY_ABSAPI
+            valueFrom:
+              secretKeyRef:
+                name: crud-secrets
+                key: KEY_ABSAPI
+          - name: KEY_OEXAPI
+            valueFrom:
+              secretKeyRef:
+                name: crud-secrets
+                key: KEY_OEXAPI
+          - name: URL_EXCAPI
+            valueFrom:
+              secretKeyRef:
+                name: crud-secrets
+                key: URL_EXCAPI
+          - name: URL_ABSAPI
+            valueFrom:
+              secretKeyRef:
+                name: crud-secrets
+                key: URL_ABSAPI
+          - name: URL_OEXAPI
+            valueFrom:
+              secretKeyRef:
+                name: crud-secrets
+                key: URL_OEXAPI
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: crud-secrets
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: crud-secrets
+                key: POSTGRES_PASSWORD
+          ports:
+            - containerPort: 8080
