@@ -37,7 +37,7 @@ public class GeneralRateServices {
                         double reverseCourse = 1 / response2.getExchangeRates().get(currency);
                         String formattedReverseCourse = String.format("%.5f", reverseCourse);
                         double benefit = (course * reverseCourse - 1) * 100;
-                        String formattedBenefit = String.format("%.5f", benefit);
+                        String formattedBenefit = String.format("%.2f", benefit);
 
                         rates.setCurrencyPair1(response1.getBase() + currency);
                         rates.setCourse1(Double.parseDouble(formattedCourse));
